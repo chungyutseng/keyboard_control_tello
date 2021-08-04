@@ -96,7 +96,7 @@ def cmd():
                 vel_msg.linear.x = -velocity
                 pub_vel_cmd.publish(vel_msg)
             elif command == 100: #d
-                vel_msg.linear.x = -velocity
+                vel_msg.linear.x = velocity
                 pub_vel_cmd.publish(vel_msg)
             elif command == 113: #q rotate left, viewed from the top
                 vel_msg.angular.z = -velocity
