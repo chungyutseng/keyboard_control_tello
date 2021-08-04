@@ -86,28 +86,28 @@ def cmd():
                 pub_takeoff.publish()
             elif command == 108:
                 pub_land.publish()
-            elif command == 119:
-                vel_msg.linear.x = velocity
-                pub_vel_cmd.publish(vel_msg)        
-            elif command == 115:
-                vel_msg.linear.x = -velocity
-                pub_vel_cmd.publish(vel_msg)        
-            elif command == 97:
+            elif command == 119: #w forward 
                 vel_msg.linear.y = velocity
-                pub_vel_cmd.publish(vel_msg)
-            elif command == 100:
+                pub_vel_cmd.publish(vel_msg)        
+            elif command == 115: #s
                 vel_msg.linear.y = -velocity
+                pub_vel_cmd.publish(vel_msg)        
+            elif command == 97:  #a
+                vel_msg.linear.x = -velocity
                 pub_vel_cmd.publish(vel_msg)
-            elif command == 113:
-                vel_msg.angular.z = velocity
+            elif command == 100: #d
+                vel_msg.linear.x = -velocity
                 pub_vel_cmd.publish(vel_msg)
-            elif command == 101:
+            elif command == 113: #q rotate left, viewed from the top
                 vel_msg.angular.z = -velocity
                 pub_vel_cmd.publish(vel_msg)
-            elif command == 32:
+            elif command == 101: #e rotate right, viewed from the top
+                vel_msg.angular.z = velocity
+                pub_vel_cmd.publish(vel_msg)
+            elif command == 32: #space
                 vel_msg.linear.z = velocity
                 pub_vel_cmd.publish(vel_msg)
-            elif command == 122:
+            elif command == 122: #z
                 vel_msg.linear.z = -velocity
                 pub_vel_cmd.publish(vel_msg)
 
