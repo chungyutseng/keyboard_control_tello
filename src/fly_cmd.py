@@ -12,7 +12,7 @@ pub_land = rospy.Publisher('/tello/land', EmptyMsg, queue_size=1)
 pub_vel_cmd = rospy.Publisher('/tello/cmd_vel', Twist, queue_size=1)
 
 command = 0
-
+# 
 def pub_cmd(data):
     global pre_time, command
     global pub_vel_cmd, pub_takeoff, pub_land
