@@ -7,9 +7,9 @@ from std_msgs.msg import Int8
 
 pre_time = 0
 
-pub_takeoff = rospy.Publisher('/ardrone/takeoff', EmptyMsg, queue_size=1)
-pub_land = rospy.Publisher('/ardrone/land', EmptyMsg, queue_size=1)
-pub_vel_cmd = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
+pub_takeoff = rospy.Publisher('/tello/takeoff', EmptyMsg, queue_size=1)
+pub_land = rospy.Publisher('/tello/land', EmptyMsg, queue_size=1)
+pub_vel_cmd = rospy.Publisher('/tello/cmd_vel', Twist, queue_size=1)
 
 command = 0
 
@@ -81,7 +81,7 @@ def cmd():
             vel_msg.angular.x = 0
             vel_msg.angular.y = 0  
             vel_msg.angular.z = 0
-            velocity = 1
+            velocity = 0.2
             if command == 116:
                 pub_takeoff.publish()
             elif command == 108:
