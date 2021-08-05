@@ -12,49 +12,12 @@ pub_land = rospy.Publisher('/tello/land', EmptyMsg, queue_size=1)
 pub_vel_cmd = rospy.Publisher('/tello/cmd_vel', Twist, queue_size=1)
 
 command = 0
-# 
+
 def pub_cmd(data):
     global pre_time, command
     global pub_vel_cmd, pub_takeoff, pub_land
     pre_time = time.time() * 1000  #in milisecond
     command = data.data
-    # vel_msg = Twist()
-    # vel_msg.linear.x = 0
-    # vel_msg.linear.y = 0
-    # vel_msg.linear.z = 0
-    # vel_msg.angular.x = 0
-    # vel_msg.angular.y = 0  
-    # vel_msg.angular.z = 0
-    # velocity = 1
-    # if command == 116:
-    #     pub_takeoff.publish()
-    # elif command == 108:
-    #     pub_land.publish()
-    # elif command == 119:
-    #     vel_msg.linear.x = velocity
-    #     pub_vel_cmd.publish(vel_msg)        
-    # elif command == 115:
-    #     vel_msg.linear.x = -velocity
-    #     pub_vel_cmd.publish(vel_msg)        
-    # elif command == 97:
-    #     vel_msg.linear.y = velocity
-    #     pub_vel_cmd.publish(vel_msg)
-    # elif command == 100:
-    #     vel_msg.linear.y = -velocity
-    #     pub_vel_cmd.publish(vel_msg)
-    # elif command == 113:
-    #     vel_msg.angular.z = velocity
-    #     pub_vel_cmd.publish(vel_msg)
-    # elif command == 101:
-    #     vel_msg.angular.z = -velocity
-    #     pub_vel_cmd.publish(vel_msg)
-    # elif command == 32:
-    #     vel_msg.linear.z = velocity
-    #     pub_vel_cmd.publish(vel_msg)
-    # elif command == 122:
-    #     vel_msg.linear.z = -velocity
-    #     pub_vel_cmd.publish(vel_msg)
-    # print()
 
 def cmd():
     global pre_time, command
@@ -111,7 +74,7 @@ def cmd():
                 vel_msg.linear.z = -velocity
                 pub_vel_cmd.publish(vel_msg)
 
-            print("QQQ\n")
+            # print("QQQ\n")
 
         rate.sleep()
 
