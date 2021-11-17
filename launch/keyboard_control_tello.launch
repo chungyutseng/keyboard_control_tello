@@ -1,6 +1,7 @@
 <launch>
 	<node pkg="keyboard_control_tello" type="keyboard_input" name="keyboard_input" output="screen"/>
 	<node pkg="keyboard_control_tello" type="fly_cmd.py" name="cmd" output="screen"/>
-    <node name="record_topics_for_verification" pkg="rosbag" type="record"
-        args="record -a"/>
+    <node pkg="image_transport" name="image_compressed1" type="republish" args="h264 in:=/tello/image_raw raw out:=raw_image" />
+    <node name="record_topics_for_verification" pkg="rosbag" type="record" args="-a -o data3 -x /raw_image"/>
+    <!-- <node name="record_topics_for_verification" pkg="rosbag" type="record" args="-a -o data1"/> -->
 </launch>
