@@ -218,6 +218,6 @@ include_directories(
 #target_link_libraries(listener ${catkin_LIBRARIES})
 #add_dependencies(listener ${${PROJECT_NAME}_EXPORTED_TARGETS}${catkin_EXPORTED_TARGETS})
 
-add_executable(keyboard_input src/keyboard_input.cpp)
-target_link_libraries(keyboard_input ${catkin_LIBRARIES})
-add_dependencies(keyboard_input ${${PROJECT_NAME}_EXPORTED_TARGETS}${catkin_EXPORTED_TARGETS})
+add_executable(keyboard_input_old src/keyboard_input_old.cpp)
+target_link_libraries(keyboard_input_old ${catkin_LIBRARIES})
+add_dependencies(keyboard_input_old ${${PROJECT_NAME}_EXPORTED_TARGETS}${catkin_EXPORTED_TARGETS})

@@ -31,7 +31,7 @@ int scanKeyboard()
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "keyboard_input");
+  ros::init(argc, argv, "keyboard_input_old");
 
   ros::NodeHandle n;
 
