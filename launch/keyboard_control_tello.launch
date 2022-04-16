@@ -1,8 +1,13 @@
 <launch>
-	<node pkg="keyboard_control_tello" type="keyboard_input" name="keyboard_input" output="screen"/>
+	<node pkg="keyboard_control_tello" type="keyboard_input_old" name="keyboard_input_old" output="screen"/>
 	<node pkg="keyboard_control_tello" type="fly_cmd.py" name="cmd" output="screen"/>
+    <node pkg="keyboard_control_tello" type="aruco_positioning.py" name="aruco_positioning" output="screen"/>
+    <node pkg="keyboard_control_tello" type="repub_imu.py" name="repub_imu" output="screen"/>
+    <node pkg="keyboard_control_tello" type="kf.py" name="kf" output="screen"/>
+    <node pkg="keyboard_control_tello" type="controller.py" name="controller" output="screen"/>
+    <node pkg="keyboard_control_tello" type="center.py" name="center" output="screen"/>
     <node pkg="image_transport" name="image_compressed1" type="republish" args="h264 in:=/tello/image_raw raw out:=raw_image" />
-    <node name="record_topics_for_verification" pkg="rosbag" type="record" args="-a -o data1 -x /raw_image" output="screen"/>
+    <node name="record_topics_for_verification" pkg="rosbag" type="record" args="-a -o data -x /raw_image" output="screen"/>
     <!-- <node name="record_topics_for_verification" pkg="rosbag" type="record" args="-a -o data1 -x /tello/raw_image" output="screen"/> -->
     <!-- <node name="record_topics_for_verification" pkg="rosbag" type="record" args="-a -o data1"/> -->
 </launch>
