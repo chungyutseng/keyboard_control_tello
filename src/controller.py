@@ -37,6 +37,10 @@ kd_z = 0.01
 kd_yaw = 0.5
 kd = np.array([kd_x, kd_y, kd_z, kd_yaw], dtype=np.float32)
 
+
+pid_gain = np.array([kp_x, kp_y, kp_z, kp_yaw, kd_x, kd_y, kd_z, kd_yaw], dtype=np.float32)
+
+
 previous_error_x = 0.0
 previous_error_y = 0.0
 previous_error_z = 0.0
@@ -44,16 +48,26 @@ previous_error_yaw = 0.0
 
 count = 0.0
 
-vel_max_linear = 0.35
-vel_max_angular = 1.5
+vel_max_linear = 1
+vel_max_angular = 0.8
 
-vel_min_linear = 0.12
-vel_min_linear_z = 0.15
-vel_min_angular = 0.3
+vel_min_linear = 0.5
+vel_min_angular = 0.5
+
+# vel_max_linear = 0.35
+# vel_max_angular = 1.5
+
+# vel_min_linear = 0.12
+# vel_min_linear_z = 0.15
+# vel_min_angular = 0.3
 
 pub_vel = rospy.Publisher("cmd_vel_test", Twist, queue_size=10)
 pub_pid_internal = rospy.Publisher('pid_internal', numpy_msg(Floats), queue_size=10)
 pub_cmd_vel_test = rospy.Publisher("cmd_vel_test_array", numpy_msg(Floats), queue_size=10)
+
+
+pub_pid_gain = rospy.Publisher("pid_gain", numpy_msg(Floats), queue_size=10)
+
 
 vel_msg = Twist()
 VO_on_off = 1.0
@@ -146,6 +160,13 @@ def pd_controller(c_pose, d_pose, kp_gain, kd_gain):
         vel_msg.linear.x = now_error_x * KP_X + ((now_error_x - previous_error_x) / (1.0/15)) * KD_X
         vel_msg.linear.y = now_error_y * KP_Y + ((now_error_y - previous_error_y) / (1.0/15)) * KD_Y
 
+        ##
+        pid_internal[0] = now_error_x
+        pid_internal[1] = now_error_y
+        pid_internal[4] = previous_error_x
+        pid_internal[5] = previous_error_y
+        ##
+
         previous_error_x = now_error_x
         previous_error_y = now_error_y
 
@@ -154,6 +175,11 @@ def pd_controller(c_pose, d_pose, kp_gain, kd_gain):
 
         vel_msg.linear.z = now_error_z * KP_Z + ((now_error_z - previous_error_z) / (1.0/15)) * KD_Z
 
+        ##
+        pid_internal[2] = now_error_z
+        pid_internal[6] = previous_error_z
+        ##
+
         previous_error_z = now_error_z
 
         now_yaw_angle = yaw_a
@@ -161,19 +187,24 @@ def pd_controller(c_pose, d_pose, kp_gain, kd_gain):
 
         vel_msg.angular.z = (now_error_yaw * KP_YAW + ((now_error_yaw - previous_error_yaw) / (1.0/15)) * KD_YAW)
 
+        ##
+        pid_internal[3] = now_error_yaw
+        pid_internal[7] = previous_error_yaw
+        ##
+
         previous_error_yaw = now_error_yaw
 
         vel_msg.angular.x = 0
         vel_msg.angular.y = 0
 
-        pid_internal[0] = now_error_x
-        pid_internal[1] = now_error_y
-        pid_internal[2] = now_error_z
-        pid_internal[3] = now_error_yaw
-        pid_internal[4] = previous_error_x
-        pid_internal[5] = previous_error_y
-        pid_internal[6] = previous_error_z
-        pid_internal[7] = previous_error_yaw
+        # pid_internal[0] = now_error_x
+        # pid_internal[1] = now_error_y
+        # pid_internal[2] = now_error_z
+        # pid_internal[3] = now_error_yaw
+        # pid_internal[4] = previous_error_x
+        # pid_internal[5] = previous_error_y
+        # pid_internal[6] = previous_error_z
+        # pid_internal[7] = previous_error_yaw
 
         cmd_vel_test[0] = vel_msg.linear.x
         cmd_vel_test[1] = vel_msg.linear.y
@@ -229,4 +260,7 @@ while not rospy.is_shutdown():
         pub_vel.publish(vel_msg)
         pub_pid_internal.publish(pid_internal)
         pub_cmd_vel_test.publish(cmd_vel_test)
+
+        pub_pid_gain.publish(pid_gain)
+
     rate.sleep()

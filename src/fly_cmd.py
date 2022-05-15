@@ -44,7 +44,7 @@ def cmd():
             vel_msg.angular.x = 0
             vel_msg.angular.y = 0  
             vel_msg.angular.z = 0
-            velocity = 0.3
+            velocity = 0.5
             if command == 116:
                 pub_takeoff.publish()
             elif command == 108:
